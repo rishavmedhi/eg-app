@@ -7,6 +7,7 @@ import { SignupController } from './signup/signup.controller';
 import { UserService } from './user/user.service';
 import { SignupModule } from './signup/signup.module';
 import { User, UserSchema } from 'src/schemas/user.schema';
+import { SigninModule } from './signin/signin.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { User, UserSchema } from 'src/schemas/user.schema';
     }),
     UserModule,
     SignupModule,
+    SigninModule,
     // MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [AppController],
