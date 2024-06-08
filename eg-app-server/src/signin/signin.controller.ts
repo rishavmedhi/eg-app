@@ -1,23 +1,27 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
   HttpStatus,
   Post,
 } from '@nestjs/common';
 import { SigninUserDto } from 'src/dto/signinUser.dto';
-import { UserService } from 'src/user/user.service';
+import { SigninService } from './signin.service';
 
 @Controller('api/signin')
 export class SigninController {
-  constructor(private userService: UserService) {}
+  constructor(private signinService: SigninService) {}
+
+  @HttpCode(HttpStatus.OK)
   @Post()
   async findUser(@Body() signinUserDto: SigninUserDto) {
     try {
-      const res = await this.userService.getUser(signinUserDto);
+      const res = await this.signinService.signIn(signinUserDto);
       return {
         message: 'User successfully signed in',
         error: false,
+        data: res,
       };
     } catch (error) {
       if (error) {
@@ -26,7 +30,7 @@ export class SigninController {
             {
               status: HttpStatus.NOT_FOUND,
               error: true,
-              message: 'User with given email not found',
+              message: 'User with given email does not exist',
             },
             HttpStatus.NOT_FOUND,
           );
