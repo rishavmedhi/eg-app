@@ -1,13 +1,11 @@
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { checkValidPassword } from "@/utils/password.utils";
 import { useState } from "react"
 import PasswordHelpHover from "../PasswordHelpHover";
 import { clientApiFetch } from "@/utils/api.utils";
-import { LoaderCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import EgButton from "../EgButton";
 
 function RegisterForm() {
 
@@ -18,12 +16,12 @@ function RegisterForm() {
   const [email, setEmail] = useState<string>('');
   const [passwordValid, setPasswordValid] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError, setApiError] = useState<string|undefined>(undefined);
+  const [apiError, setApiError] = useState<string | undefined>(undefined);
 
   async function formSubmit() {
+    setApiError(undefined);
     if (name && name.length > 0 && email && email.length > 0 && password && checkValidPassword(password)) {
       setIsLoading(true);
-      setApiError('');
       const res = await clientApiFetch("http://localhost:3000/api/signup", {
         method: 'POST',
         body: {
@@ -35,7 +33,7 @@ function RegisterForm() {
       if (!res.error) {
         navigate('/app');
       }
-      else{
+      else {
         setApiError(res.message);
       }
       setIsLoading(false);
@@ -67,18 +65,14 @@ function RegisterForm() {
           setPassword(e.target.value)
         }} required />
         {
-          !passwordValid && <p className="text-red-500 text-sm">Incorrect Password format.<br/>Please enter the password in the proper format</p>
+          !passwordValid && <p className="text-red-500 text-sm">Incorrect Password format.<br />Please enter the password in the proper format</p>
         }
       </div>
 
-      <Button className='bg-blue-600 hover:bg-blue-500' onClick={formSubmit} type="submit">Register
-        {
-          isLoading && <LoaderCircle className="animate-spin ml-2 w-5" />
-        }
-      </Button>
-        
-        <p className="text-red-500 text-sm">{apiError}</p>
-        
+      <EgButton onClick={formSubmit} isLoading={isLoading} type="submit">Register</EgButton>
+
+      <p className="text-red-500 text-sm">{apiError}</p>
+
     </form>
   )
 }

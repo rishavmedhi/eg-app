@@ -3,12 +3,12 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
-import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
+import { CircleHelp } from "lucide-react";
 
 function PasswordHelpHover() {
   return (
     <HoverCard>
-      <HoverCardTrigger><QuestionMarkCircledIcon className="inline ml-1 mb-0.5 blue-600 cursor-pointer" /></HoverCardTrigger>
+      <HoverCardTrigger><CircleHelp className="inline ml-1 mb-0.5 blue-600 cursor-pointer w-4" /></HoverCardTrigger>
       <HoverCardContent className="font-normal text-md w-72">
         Password must satisfy the following:
         <ul className="list-disc list-inside mt-2">
