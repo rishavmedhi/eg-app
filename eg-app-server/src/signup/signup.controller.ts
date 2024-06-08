@@ -26,7 +26,7 @@ export class SignupController {
             {
               status: HttpStatus.BAD_REQUEST,
               error: true,
-              message: 'Email already exists',
+              message: 'Email already exists. Please use a different email',
             },
             HttpStatus.BAD_REQUEST,
           );
