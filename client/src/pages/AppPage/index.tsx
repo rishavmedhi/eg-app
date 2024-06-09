@@ -23,6 +23,12 @@ function AppPage() {
 
     init();
   })
+
+  function logOut(){
+    deleteCookies();
+    navigate('/login');
+  }
+
   return (
     <div>
       <div className="sticky top-0 z-40 w-full backdrop-blur shadow-md">
@@ -31,7 +37,7 @@ function AppPage() {
             <div className="font-medium">Eg App</div>
             <div className="flex">
               <p>{fetchFromCookie('username')}</p>
-              <LogOut className="w-5 ml-4" />
+              <LogOut className="w-5 ml-4 cursor-pointer" onClick={logOut}/>
             </div>
           </div>
         </div>
