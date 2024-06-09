@@ -6,18 +6,19 @@ import {
   Post,
 } from '@nestjs/common';
 import { CreateUserDto } from 'src/dto/createUser.dto';
-import { UserService } from 'src/user/user.service';
+import { SignupService } from './signup.service';
 
 @Controller('api/signup')
 export class SignupController {
-  constructor(private userService: UserService) {}
+  constructor(private signupService: SignupService) {}
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      await this.userService.create(createUserDto);
+      const res = await this.signupService.signup(createUserDto);
       return {
         message: 'User successfully signed-up',
         error: false,
+        data: res,
       };
     } catch (error) {
       if (error && error.errorResponse) {

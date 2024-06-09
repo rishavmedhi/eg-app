@@ -22,7 +22,6 @@ export class SigninService {
     if (user[0].password !== signinUserDto.password) {
       throw new UnauthorizedException();
     }
-    console.log(user);
     const payload = { userEmail: user[0].email, sub: 1 };
     return {
       access_token: await this.jwtService.signAsync(payload),
