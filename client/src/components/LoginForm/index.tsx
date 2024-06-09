@@ -13,7 +13,8 @@ function LoginForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | undefined>(undefined)
 
-  async function formSubmit() {
+  async function formSubmit(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
     setApiError(undefined);
     if (email && email.length > 0 && password && password.length > 0) {
       setIsLoading(true);
@@ -21,7 +22,7 @@ function LoginForm() {
         method: 'POST',
         body: {
           email: email,
-          password: password
+          password: btoa(password)
         }
       })
       if (!res.error) {
@@ -35,7 +36,7 @@ function LoginForm() {
   }
 
   return (
-    <form action="#" className='mt-10 grid grid-cols-1 gap-y-8'>
+    <form className='mt-10 grid grid-cols-1 gap-y-8'>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="email">Email</Label>
         <Input type="email" id="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />

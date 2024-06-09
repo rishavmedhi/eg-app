@@ -18,7 +18,8 @@ function RegisterForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setApiError] = useState<string | undefined>(undefined);
 
-  async function formSubmit() {
+  async function formSubmit(e:React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
     setApiError(undefined);
     if (name && name.length > 0 && email && email.length > 0 && password && checkValidPassword(password)) {
       setIsLoading(true);
@@ -27,7 +28,7 @@ function RegisterForm() {
         body: {
           name: name,
           email: email,
-          password: password
+          password: btoa(password)
         }
       })
       if (!res.error) {
@@ -44,7 +45,7 @@ function RegisterForm() {
   }
 
   return (
-    <form action="#" className='mt-10 grid grid-cols-1 gap-y-8'>
+    <form className='mt-10 grid grid-cols-1 gap-y-8'>
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label htmlFor="name">Name</Label>
         <Input type="text" id="name" required onChange={(e) => setName(e.target.value)} />
