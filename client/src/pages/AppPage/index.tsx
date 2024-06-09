@@ -1,7 +1,28 @@
 import { LogOut } from "lucide-react";
 import WelcomeImg from "../../assets/welcome.svg";
+import { deleteCookies, fetchCookieToken, fetchFromCookie } from "@/utils/user.utils";
+import { useEffect } from "react";
+import { clientApiFetch } from "@/utils/api.utils";
+import { useNavigate } from "react-router-dom";
 
 function AppPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function init(){
+      const res = await clientApiFetch("http://localhost:3000/api/profile", {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${fetchCookieToken()}`
+        }
+      })
+      if(res.error){
+        deleteCookies();
+        navigate('/login');
+      }
+    }
+
+    init();
+  })
   return (
     <div>
       <div className="sticky top-0 z-40 w-full backdrop-blur shadow-md">
@@ -9,7 +30,7 @@ function AppPage() {
           <div className="relative flex items-center justify-between">
             <div className="font-medium">Eg App</div>
             <div className="flex">
-              <p>Rishav</p>
+              <p>{fetchFromCookie('username')}</p>
               <LogOut className="w-5 ml-4" />
             </div>
           </div>

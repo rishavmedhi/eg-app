@@ -11,11 +11,12 @@ export class SignupService {
   ) {}
 
   async signup(createUserDto: CreateUserDto): Promise<any> {
-    const res = await this.userService.create(createUserDto);
+    const user = await this.userService.create(createUserDto);
 
-    const payload = { userEmail: res.email, sub: 1 };
+    const payload = { userEmail: user.email, sub: 1 };
     return {
       access_token: await this.jwtService.signAsync(payload),
+      username: user.name,
     };
   }
 }

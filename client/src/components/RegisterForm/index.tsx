@@ -6,6 +6,7 @@ import PasswordHelpHover from "../PasswordHelpHover";
 import { clientApiFetch } from "@/utils/api.utils";
 import { useNavigate } from "react-router-dom";
 import EgButton from "../EgButton";
+import { storeInCookie, storeTokenInCookie } from "@/utils/user.utils";
 
 function RegisterForm() {
 
@@ -32,6 +33,8 @@ function RegisterForm() {
         }
       })
       if (!res.error) {
+        storeTokenInCookie(res.data.access_token);
+        storeInCookie('username', res.data.username);
         navigate('/app');
       }
       else {

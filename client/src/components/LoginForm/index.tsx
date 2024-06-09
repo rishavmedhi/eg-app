@@ -4,6 +4,7 @@ import { useState } from "react"
 import EgButton from "../EgButton";
 import { clientApiFetch } from "@/utils/api.utils";
 import { useNavigate } from "react-router-dom";
+import { storeInCookie, storeTokenInCookie } from "@/utils/user.utils";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ function LoginForm() {
         }
       })
       if (!res.error) {
+        storeTokenInCookie(res.data.access_token);
+        storeInCookie('username', res.data.username);
         navigate('/app');
       }
       else {
